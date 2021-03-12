@@ -1,34 +1,53 @@
-const typeInput = document.getElementById('input-type');
-const mountInput = document.getElementById('input-mount');
-const saveBtn = document.getElementById('btn-save');
-const spendingList = document.getElementById('list-spending');
-const totalOutput = document.getElementById('output-total');
+const tipoInput = document.querySelector('#input-tipo');
+const montoInput = document.querySelector('#input-monto');
+const guardarBtn = document.querySelector('#btn-guardar');
+const gastosList = document.querySelector('#list-gastos');
+const totalOutput = document.querySelector('#output-total');
+
 
 let total = 0;
 
-const clearElements = () => {
-    typeInput.value = '';
-    mountInput.value = '';
+function clear() {
+
+    tipoInput.value = '';
+    montoInput.value = '';
+
 }
 
-saveBtn.addEventListener('click', (event) => {
-    const type =  typeInput.value,
-        mount = mountInput.value;
+guardarBtn.addEventListener('click', () => {
 
-    if(type.trim().length > 0 && mount.trim().length > 0){
+    const tipo = tipoInput.value;
+    const monto = montoInput.value;
+
+
+    if (tipo.trim().length > 0 && monto.trim().length > 0 && monto > 0) {
+
+        console.log('Valores validos');
+
         const newItem = document.createElement('ion-item');
-        newItem.textContent = type + ': $' + mount;
-        spendingList.appendChild(newItem);
-        total += +mount;
+        newItem.textContent = tipo + ': $' + monto;
+        gastosList.appendChild(newItem);
+
+        total += +monto;
         totalOutput.textContent = total;
-        clearElements();
-    }else{
+
+        clear();
+    } 
+    
+    else {
+
         alertController.create({
-            message: 'Complete los campos requeridos',
-            header: 'Valores invalidos !!',
+
+            message: 'Llene los campo corerctamente',
+            header: 'Valores invalidos',
             buttons: ['Ok']
+        
         }).then(alertElement => {
+
             alertElement.present();
+        
         });
+
     }
+
 });
